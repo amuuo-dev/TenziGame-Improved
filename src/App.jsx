@@ -1,5 +1,6 @@
 import Dice from "../components/Dice";
 import { nanoid } from "nanoid";
+import Footer from "../components/Footer";
 import Confetti from "react-confetti";
 import { useEffect, useState } from "react";
 const App = () => {
@@ -57,18 +58,21 @@ const App = () => {
     />
   ));
   return (
-    <main>
-      {tenzies && <Confetti />}
-      <h1 className="title">Tenzies</h1>
-      <p className="instructions">
-        Roll until all dice are the same. Click each die to freeze it at its
-        current value between rolls.
-      </p>
-      <div className="container">{dieElement}</div>
-      <button onClick={rollDice} className="roll-dice">
-        {tenzies ? "New Game" : "Roll"}
-      </button>
-    </main>
+    <div className="app-container shadow-shorter">
+      <main>
+        {tenzies && <Confetti />}
+        <h1 className="title">Tenzies</h1>
+        <p className="instructions">
+          Roll until all dice are the same. Click each die to freeze it at its
+          current value between rolls.
+        </p>
+        <div className="container">{dieElement}</div>
+        <button onClick={rollDice} className="roll-dice">
+          {tenzies ? "New Game" : "Roll"}
+        </button>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
