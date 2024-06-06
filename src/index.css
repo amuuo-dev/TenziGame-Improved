@@ -194,6 +194,10 @@ main {
   font-weight: bold;
   color: #2b283a;
 }
+.rolls-best > p:last-child,
+.time-best > p:last-child {
+  margin-block: 0.5em;
+}
 .footer {
   padding: 1.25em 2.25em;
   justify-content: center;

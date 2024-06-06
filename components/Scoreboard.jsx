@@ -1,6 +1,6 @@
 const Scoreboard = (props) => {
   return (
-    <div className="Scoreboard">
+    <div>
       <div className="stats-container">
         <div className="rolls-best">
           <p>Best rolls</p>

@@ -13,6 +13,24 @@ const App = () => {
   const [bestRolls, setBestRolls] = useState(
     JSON.parse(localStorage.getItem("bestRolls")) || 0,
   );
+  //time---------
+  const [time, setTime] = useState(0);
+  const [start, setStart] = useState(true); //when timer to start
+  const [bestTime, setBestTime] = useState(
+    JSON.parse(localStorage.getItem("bestTime")) || 0,
+  );
+
+  useEffect(() => {
+    let interval = null;
+    if (start) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [start]);
 
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -20,6 +38,7 @@ const App = () => {
     const allSameValue = dice.every((die) => die.value === firstValue);
     if (allHeld && allSameValue) {
       setTenzies(true);
+      setStart(false);
       Record();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,10 +50,16 @@ const App = () => {
       id: nanoid(),
     };
   }
+
   // Set bestRolls to localStorage every item bestRolls changes
   useEffect(() => {
     localStorage.setItem("bestRolls", JSON.stringify(bestRolls));
   }, [bestRolls]);
+
+  // Set bestTime to localStorage every item bestTime changes
+  useEffect(() => {
+    localStorage.setItem("bestTime", JSON.stringify(bestTime));
+  }, [bestTime]);
 
   function allNewDice() {
     const newDice = [];
@@ -47,7 +72,13 @@ const App = () => {
     if (!bestRolls || rolls < bestRolls) {
       setBestRolls(rolls);
     }
+    const timeFloored = Math.floor(time / 10);
+    // Check if bestTime doesn't exist or newest time is lower than bestTime if so reassign the variable
+    if (!bestTime || timeFloored < bestTime) {
+      setBestTime(timeFloored);
+    }
   }
+
   function rollDice() {
     if (!tenzies) {
       setDice((oldDice) =>
@@ -86,7 +117,7 @@ const App = () => {
   }
   return (
     <div className="app-container shadow-shorter">
-      {tenzies && <Confetti />}
+      {tenzies && <Confetti className="confetti" />}
       <main>
         <h1 className="title">Tenzies</h1>
         {!tenzies && (
@@ -100,13 +131,19 @@ const App = () => {
 
         <div className="stats-container">
           <p>Rolls: {rolls}</p>
+          <p>
+            {/* This code displays the timer in the format ss:ms, 
+            where ss is the seconds and ms is the hundredths of a second. */}
+            Timer: {("0" + Math.floor((time / 1000) % 60)).slice(-2)}:
+            {("0" + ((time / 10) % 1000)).slice(-2)}
+          </p>
         </div>
 
         <div className="container">{dieElement}</div>
         <button onClick={rollDice} className="roll-dice">
           {tenzies ? "New Game" : "Roll"}
         </button>
-        <Scoreboard bestRolls={bestRolls} />
+        <Scoreboard bestRolls={bestRolls} bestTime={bestTime} />
       </main>
       <Footer />
     </div>
