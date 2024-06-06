@@ -110,6 +110,7 @@ const App = () => {
     setTenzies(false);
     setDice(allNewDice());
     setRolls(0);
+    setTime(0); // Reset the timer
   }
   // Increase rolls counter updating previous state
   function updateRolls() {
