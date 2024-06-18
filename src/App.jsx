@@ -95,13 +95,16 @@ const App = () => {
       resetGame();
     }
   }
+
   function holdDice(id) {
+    if (lost || tenzies) return;
     setDice((oldDice) =>
       oldDice.map((die) => {
         return die.id === id ? { ...die, isHeld: !die.isHeld } : die;
       }),
     );
   }
+
   const dieElement = dice.map((die) => (
     <Dice
       key={die.id}
