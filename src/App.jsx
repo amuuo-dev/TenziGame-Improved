@@ -84,7 +84,7 @@ const App = () => {
   }
 
   function rollDice() {
-    if (!tenzies) {
+    if (!tenzies && !lost) {
       setDice((oldDice) =>
         oldDice.map((die) => {
           return die.isHeld ? die : generateNewDie();
@@ -152,7 +152,7 @@ const App = () => {
 
         <div className="container">{dieElement}</div>
         <button onClick={rollDice} className="roll-dice">
-          {tenzies ? "New Game" : "Roll"}
+          {tenzies || lost ? "New Game" : "Roll"}
         </button>
         <Scoreboard bestRolls={bestRolls} bestTime={bestTime} />
       </main>
