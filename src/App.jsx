@@ -138,7 +138,7 @@ const App = () => {
           </p>
         )}
         {tenzies && <p className="winner gradient-text"> YOU WIN!</p>}
-        {lost && <p className="loser"> YOU LOST!</p>}
+        {lost && <p className="loser"> YOU LOST😞</p>}
 
         <div className="stats-container">
           <p>Rolls: {rolls}</p>

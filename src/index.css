@@ -198,6 +198,13 @@ main {
 .time-best > p:last-child {
   margin-block: 0.5em;
 }
+.loser {
+  margin-top: 0.5em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: red;
+}
 .footer {
   padding: 1.25em 2.25em;
   justify-content: center;
