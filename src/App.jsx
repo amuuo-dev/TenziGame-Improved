@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const App = () => {
   const [dice, setDice] = useState(allNewDice);
   const [tenzies, setTenzies] = useState(false);
+  const [lost, setLost] = useState(false);
 
   // Create and initialize states to hold rolls stats
   const [rolls, setRolls] = useState(0);
@@ -40,9 +41,12 @@ const App = () => {
       setTenzies(true);
       setStart(false);
       Record();
+    } else if (time >= 59000) {
+      setLost(true);
+      setStart(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dice]);
+  }, [dice, time]);
   function generateNewDie() {
     return {
       value: Math.ceil(Math.random() * 6),
@@ -112,6 +116,7 @@ const App = () => {
     setRolls(0);
     setTime(0); // Reset the timer
     setStart(true); // Start the timer when the new game starts
+    setLost(false); // Reset the lost state
   }
   // Increase rolls counter updating previous state
   function updateRolls() {
@@ -122,14 +127,15 @@ const App = () => {
       {tenzies && <Confetti className="confetti" />}
       <main>
         <h1 className="title">Tenzies</h1>
-        {!tenzies && (
+        {!tenzies && !lost && (
           <p className="instructions">
             Roll until all dice are the same.
             <br /> Click each die to freeze it at its current value between
             rolls.
           </p>
         )}
-        {tenzies && <p className="winner gradient-text"> YOU WON!</p>}
+        {tenzies && <p className="winner gradient-text"> YOU WIN!</p>}
+        {lost && <p className="loser"> YOU LOST!</p>}
 
         <div className="stats-container">
           <p>Rolls: {rolls}</p>
