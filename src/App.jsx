@@ -111,6 +111,7 @@ const App = () => {
     setDice(allNewDice());
     setRolls(0);
     setTime(0); // Reset the timer
+    setStart(true); // Start the timer when the new game starts
   }
   // Increase rolls counter updating previous state
   function updateRolls() {
